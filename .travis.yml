@@ -1,0 +1,24 @@
+language: node
+
+cache:
+  - node_modules
+
+install:
+  - pushd client && yarn install && yarn build && popd
+  - yarn install
+
+before_script:
+  - pushd client && yarn build && popd
+  - yarn build
+
+script:
+  - pushd client && yarn test && popd
+  - yarn test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "ZMlHv663IR/ZOTL+5lyNGeYlbjegAGP4eZ+oL4Ua0fFPY3FXJQ7j/2GVrrW1mueQVaYTGxU+S9SSN03NRuUM+ntrHQr6WJKWA2MsZMEhkwRTNqP7qYhv8zzsoquzZlLBi5oEnyEhmLo+x3v7MteIsjxU+Keyep9bpoKntppQpyY+S/u6DXGd41JmT3+CIfS2CKLLmziGsbkGyJnWYBBych7ot3TUgQSD5+95VVCsFMTjf2MSzsBdLT2m9Q8bBEKAxCmalrEynMDZbvUN+UvrNF4vtwjfNHI5OI7qKqPcXmNhayV7TJwudTHsCtXi5YraJjuGHiLqQU/4oaRMxbfqqzrdBiupa9qDkSgPmNOvFA4nkaqo3gTY4GAR7/K6Dn2VA4dh/k2elHmPHRVBDVe/0ixPHXuEiPW8TNO5Ojk3p9l37kSoG6e870V91F0EVc1ztfEsHk7mn68iDZHMYtgyMEhZjIlWDmGX/zVBsgbvO1ikdYR9WXcy4KBTc6P6UQq5uVHZMD+56Ip7oFiN758/IC7REFdcGVEigEWe89KGBYorcKwKoG78XC0ZTN9yHs9enWPW9oznfV8r+dRcBRUGh2zhmg6LiQ4inIvW6+4XdCV3q6TlW6CnAENm82E7X0n9f5Red26eabtJpqv8q5fADR0Zu+SImvcnC0o4+17B10I="
+  app: nba-assist
+  on:
+    repo: gregbuehler/nba-assist
