@@ -1,12 +1,13 @@
 const express = require('express');
+const morgan = require('morgan');
 const path = require('path');
 
 const NBA = require('nba');
 
 const app = express();
 
-// serve built static assets
-app.use(express.static(path.join(__dirname, 'client/build')));
+// configure the logger
+app.use(morgan('combined'));
 
 // serve up an api
 app.get('/api/players', (req, res) => {
@@ -35,6 +36,10 @@ app.get('/api/teams/:team_id', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
+
+// serve built static assets
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 const port = process.env.PORT || 5000;
 app.listen(port);
